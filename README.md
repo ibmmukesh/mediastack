@@ -26,12 +26,26 @@ Application will work in online mode. Handle no network/data conditions.
 ### Some glimpse of Media stack app:
 
  
- - Application Icon & Spalsh: https://github.com/mukeshlokare/ImagesFiles/blob/master/Screenshot%202022-03-03%20at%204.32.19%20PM.png
+ - Application Icon & Spalsh: 
+ <br>
+ <img height="700" src="https://github.com/mukeshlokare/ImagesFiles/blob/master/Screenshot%202022-03-03%20at%204.32.19%20PM.png"/>
+ <br>
 
- - NewsList: https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.06.17.png
+ - NewsList:
+ <br>
+ <img height="700" src="https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.06.17.png"/>
+ <br>
+ - News Detail (In webview): 
+ <br>
+ <img height="700" src="https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.06.26.png"/>
+ <br>
  
- - News Detail (In webview): https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.06.26.png
+ - No Internet: 
+ <br>
+ <img height="700" src="https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.07.28.png"/>
+ <br>
  
- - No Internet: https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.07.28.png
- 
- - No any news: https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.07.06.png 
+ - No any news: 
+<br>
+ <img height="700" src="https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.07.06.png "/>
+ <br>
