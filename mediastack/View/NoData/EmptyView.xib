@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EmptyView" customModule="mediastack" customModuleProvider="target">
+            <connections>
+                <outlet property="messageLabel" destination="bMM-ry-Otj" id="i6P-Yz-30F"/>
+                <outlet property="noDataImageView" destination="zHw-Mf-2Bp" id="u3m-0V-Qtq"/>
+                <outlet property="refreshButton" destination="Jkn-Pl-n3m" id="0Wp-fj-PCu"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="430" height="308"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No news to show" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMM-ry-Otj">
+                    <rect key="frame" x="137.5" y="142" width="155.5" height="24"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <color key="textColor" red="0.54117647059999996" green="0.56470588239999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="zHw-Mf-2Bp">
+                    <rect key="frame" x="181" y="58" width="68" height="54"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jkn-Pl-n3m">
+                    <rect key="frame" x="165" y="216" width="100" height="40"/>
+                    <color key="backgroundColor" red="0.89019607840000003" green="0.14901960780000001" blue="0.14901960780000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="at7-5I-ehH"/>
+                        <constraint firstAttribute="width" constant="100" id="qGb-4J-l2J"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                    <state key="normal" title="Refresh">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="refreshClicked:" destination="-1" eventType="touchUpInside" id="wyB-p6-M12"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="zHw-Mf-2Bp" firstAttribute="centerX" secondItem="bMM-ry-Otj" secondAttribute="centerX" id="6oR-eu-Ifg"/>
+                <constraint firstItem="bMM-ry-Otj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7gj-qn-lQS"/>
+                <constraint firstItem="bMM-ry-Otj" firstAttribute="centerX" secondItem="Jkn-Pl-n3m" secondAttribute="centerX" id="UPW-rp-MG5"/>
+                <constraint firstItem="bMM-ry-Otj" firstAttribute="top" secondItem="zHw-Mf-2Bp" secondAttribute="bottom" constant="30" id="hbH-g7-Eww"/>
+                <constraint firstItem="Jkn-Pl-n3m" firstAttribute="top" secondItem="bMM-ry-Otj" secondAttribute="bottom" constant="50" id="rOd-YB-UgQ"/>
+                <constraint firstItem="bMM-ry-Otj" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="xvf-vk-Flc"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="149.27536231884059" y="750"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="placeholder" width="68" height="54"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

@@ -40,6 +40,10 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
         // Initialization code
     }
 
+    override func prepareForReuse() {
+        newsImageView.image = UIImage(named: AppConstant.imagePlaceholder)
+        super.prepareForReuse()
+    }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
@@ -48,7 +52,8 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
     
     //MARK: Populate news cell information
     private func configureCell(){
-                
+        newsImageView.image = UIImage(named: AppConstant.imagePlaceholder)
+
         self.sourceLabel.text = newsItem?.source
         self.publishedLabel.text = newsItem?.published_at
         self.titleLabel.text = newsItem?.title
@@ -69,7 +74,7 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
         
         if let imageURLStr = newsItem?.image{
             if let imageURL = URL(string: imageURLStr){
-                self.newsImageView.sd_setImage(with: imageURL, placeholderImage: nil, options: .progressiveLoad, context: nil)
+                self.newsImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: AppConstant.imagePlaceholder) , options: .progressiveLoad, context: nil)
             }
         }
         

@@ -11,7 +11,9 @@ class NewsViewController: UIViewController {
     
     //MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
+    
     private var activityIndicator = UIActivityIndicatorView()
+    let emptyView:EmptyView = EmptyView()
 
     //MARK: Instances
     private var newsViewModel : NewsViewModelProtocol!
@@ -30,7 +32,12 @@ class NewsViewController: UIViewController {
         
         newsViewModel = NewsViewModel(newsWebService: NewsWebservices())//Initialize ViewModel & pass required depdendencies.
         configureTableView()
-        fetchNews()
+        
+        if Reachbility.isConnected{
+            fetchNews()
+        }else{
+            self.showEmptyView(emptyType:.noInternet)
+        }
     }
 
     //MARK: Configure TableView
@@ -49,9 +56,18 @@ class NewsViewController: UIViewController {
         
         //TODO: Make filter dynamic i.e sources, categories, countries, languages, keywords & sort
         newsViewModel.liveNews(sources: "", categories: "business,sports", countries: "us,au", languages: "en", keywords: "", sort: "published_desc", offset: pageOffset, limit: Constant.pageLimit) {
-            //To be on safer side reload table data on main thread after background API call
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            
+            if let newsFeeds = self.newsViewModel.newsList, newsFeeds.count > 0{
+                //To be on safer side reload table data on main thread after background API call
+                DispatchQueue.main.async {
+                    self.tableView.isUserInteractionEnabled = true
+                    self.tableView.reloadData()
+                }
+            }else{
+                DispatchQueue.main.async {
+                    self.tableView.isUserInteractionEnabled = false
+                    self.showEmptyView(emptyType: .noNewsData)
+                }
             }
         }
     }
@@ -74,6 +90,37 @@ class NewsViewController: UIViewController {
         activityIndicator.startAnimating()
         self.tableView.tableFooterView = activityIndicator
         self.tableView.tableFooterView?.isHidden = false
+    }
+    
+    //MARK: EmptyView
+    private func showEmptyView(emptyType: EmptyViewType){
+        
+        self.emptyView.frame = view.bounds
+        self.emptyView.delegate = self
+        self.emptyView.emptyType = emptyType //Pass empty type enum case to manage specific type of empty data
+        self.emptyView.setUpEmptyView()
+        self.tableView.addSubview(self.emptyView)
+        
+    }
+    
+    // MARK: - Navigation
+    private func showNewsDetail(news:News){
+        let storyboard = UIStoryboard(name:"Main", bundle: nil)
+        let newsDetailController : NewsDetailViewController = storyboard.instantiateViewController(withIdentifier: "NewsDetailViewController") as! NewsDetailViewController
+        newsDetailController.newsDetailViewModel = NewsDetailViewModel(news: news)//Initialize ViewModel & pass required depdendencies.
+        self.navigationController?.pushViewController(newsDetailController, animated: true)
+    }
+}
+
+//MARK: EmptyViewDelegate
+extension NewsViewController: EmptyViewDelegate{
+    func refreshClicked() {
+        if Reachbility.isConnected{
+            self.emptyView.removeFromSuperview()
+            fetchNews()
+        }else{
+            self.showEmptyView(emptyType:.noInternet)
+        }
     }
 }
 
@@ -115,6 +162,8 @@ extension NewsViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Cell Clicked: \(indexPath.row)")
+        if let newsList = self.newsViewModel.newsList, newsList.count > 0{
+            self.showNewsDetail(news: newsList[indexPath.row])
+        }
     }
 }
