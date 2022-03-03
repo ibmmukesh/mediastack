@@ -11,8 +11,9 @@ import Foundation
 protocol NewsViewModelProtocol{
     
     //Input, Output
-    var newsList : [News]? { get set}
-    var newsListDidChange: ((NewsViewModelProtocol) -> ())? { get set } // function to call when instance did change
+    var newsList:[News]? {get}
+    var pagination : Pagination? { get set}
+    var paginationDidChange: ((NewsViewModelProtocol) -> ())? { get set } // function to call when instance did change
 
     //Initializer
     init(newsWebService:NewsWebservices?)
@@ -38,25 +39,33 @@ class NewsViewModel: NewsViewModelProtocol{
         self.newsWebService = newsWebService
     }
     
-    var newsList: [News]?{
+    internal var newsList: [News]? {
+        return newsItems
+    }
+    
+    internal var pagination: Pagination?{
         didSet{
-            self.newsListDidChange?(self)
+            self.paginationDidChange?(self)
         }
     }
-    var newsListDidChange: ((NewsViewModelProtocol) -> ())?
-
+    
+    var paginationDidChange: ((NewsViewModelProtocol) -> ())?
+    private var newsItems = [News]()
+    
     //Function to call live news webservice
     func liveNews(sources: String, categories: String, countries: String, languages: String, keywords: String, sort: String, offset: Int, limit: Int, completion: @escaping emptyCompletionHandler) {
         
-        let parameter = NewsParameter(access_key: AppConstant.apiAccessKey, sources: sources, categories: categories, countries: countries, languages: languages, keywords: keywords, sort: sort, offset: 0, limit: 100)
+        let parameter = NewsParameter(access_key: AppConstant.apiAccessKey, sources: sources, categories: categories, countries: countries, languages: languages, keywords: keywords, sort: sort, offset: offset, limit: limit)
         
         self.newsWebService?.liveNews(parameter: parameter, completionHandler: { (response) in
 
             switch response {
             case .success(value: let response) :
-                print(response)
                 if let newsFeed = response.data, newsFeed.count > 0 {
-                    self.newsList = newsFeed
+                    self.newsItems += newsFeed
+                }
+                if let pagination = response.pagination {
+                    self.pagination = pagination
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -75,10 +84,10 @@ extension NewsViewModel{
     }
     
     internal func numberOfRows()->Int {
-        return newsList?.count ?? 0
+        return newsItems.count 
     }
     
     internal func detailsForCell(indexPath: IndexPath)->News? {
-        return newsList?[indexPath.row] as News?
+        return newsItems[indexPath.row] as News?
     }
 }

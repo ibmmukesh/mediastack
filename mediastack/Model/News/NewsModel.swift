@@ -53,4 +53,6 @@ struct News: Codable{
 struct Pagination: Codable{
     var limit: Int
     var offset: Int
+    var count: Int
+    var total: Int
 }
