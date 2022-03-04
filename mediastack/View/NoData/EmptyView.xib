@@ -20,8 +20,8 @@
             <rect key="frame" x="0.0" y="0.0" width="430" height="308"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No news to show" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMM-ry-Otj">
-                    <rect key="frame" x="137.5" y="142" width="155.5" height="24"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No news to show" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bMM-ry-Otj">
+                    <rect key="frame" x="25" y="142" width="380" height="24"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                     <color key="textColor" red="0.54117647059999996" green="0.56470588239999997" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -51,9 +51,11 @@
                 <constraint firstItem="zHw-Mf-2Bp" firstAttribute="centerX" secondItem="bMM-ry-Otj" secondAttribute="centerX" id="6oR-eu-Ifg"/>
                 <constraint firstItem="bMM-ry-Otj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7gj-qn-lQS"/>
                 <constraint firstItem="bMM-ry-Otj" firstAttribute="centerX" secondItem="Jkn-Pl-n3m" secondAttribute="centerX" id="UPW-rp-MG5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="bMM-ry-Otj" secondAttribute="trailing" constant="25" id="X9Z-jb-kYQ"/>
                 <constraint firstItem="bMM-ry-Otj" firstAttribute="top" secondItem="zHw-Mf-2Bp" secondAttribute="bottom" constant="30" id="hbH-g7-Eww"/>
                 <constraint firstItem="Jkn-Pl-n3m" firstAttribute="top" secondItem="bMM-ry-Otj" secondAttribute="bottom" constant="50" id="rOd-YB-UgQ"/>
                 <constraint firstItem="bMM-ry-Otj" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="xvf-vk-Flc"/>
+                <constraint firstItem="bMM-ry-Otj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="25" id="yYa-G5-4tq"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="149.27536231884059" y="750"/>

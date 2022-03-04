@@ -30,7 +30,14 @@
                             <constraint firstItem="ESd-kg-oHS" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ftE-jq-ZYR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="News" id="5wk-3x-TlO"/>
+                    <navigationItem key="navigationItem" title="News" id="5wk-3x-TlO">
+                        <barButtonItem key="rightBarButtonItem" image="FilterIcon" id="LbA-1E-NSU">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="filterBarButtonClicked:" destination="BYZ-38-t0r" id="Q6J-5b-0Gt"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="ESd-kg-oHS" id="nnC-eP-tCx"/>
                     </connections>
@@ -75,6 +82,72 @@
             </objects>
             <point key="canvasLocation" x="1513.0434782608697" y="-254.46428571428569"/>
         </scene>
+        <!--News Filter-->
+        <scene sceneID="rGS-JD-BhG">
+            <objects>
+                <viewController storyboardIdentifier="NewsFilterViewController" id="Dok-OF-89c" customClass="NewsFilterViewController" customModule="mediastack" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SoE-zF-kj4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="rTS-l4-b4f">
+                                <rect key="frame" x="0.0" y="88" width="414" height="758"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Tty-6Z-U63">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="urK-Hw-smA">
+                                <rect key="frame" x="0.0" y="846" width="414" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D88-SK-hzG">
+                                        <rect key="frame" x="0.0" y="0.0" width="207" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Reset"/>
+                                        <connections>
+                                            <action selector="resetButtonClicked:" destination="Dok-OF-89c" eventType="touchUpInside" id="w1u-zz-2Jm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mF4-aD-sip">
+                                        <rect key="frame" x="207" y="0.0" width="207" height="50"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Apply"/>
+                                        <connections>
+                                            <action selector="applyButtonClicked:" destination="Dok-OF-89c" eventType="touchUpInside" id="PAF-36-4ic"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ror-Ub-anN"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="xvI-nE-6B0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="urK-Hw-smA" firstAttribute="top" secondItem="rTS-l4-b4f" secondAttribute="bottom" id="2bJ-uX-gid"/>
+                            <constraint firstAttribute="bottom" secondItem="urK-Hw-smA" secondAttribute="bottom" id="6r5-fy-de0"/>
+                            <constraint firstItem="rTS-l4-b4f" firstAttribute="top" secondItem="xvI-nE-6B0" secondAttribute="top" id="AKT-Qo-L7Z"/>
+                            <constraint firstAttribute="trailing" secondItem="rTS-l4-b4f" secondAttribute="trailing" id="JyP-Pq-Z7E"/>
+                            <constraint firstItem="xvI-nE-6B0" firstAttribute="trailing" secondItem="urK-Hw-smA" secondAttribute="trailing" id="M4r-tQ-ziI"/>
+                            <constraint firstItem="urK-Hw-smA" firstAttribute="leading" secondItem="xvI-nE-6B0" secondAttribute="leading" id="Wgf-fZ-qCI"/>
+                            <constraint firstItem="rTS-l4-b4f" firstAttribute="leading" secondItem="SoE-zF-kj4" secondAttribute="leading" id="eFH-qF-2aV"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="News Filter" id="Cqv-vh-8Jz"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="collectionView" destination="rTS-l4-b4f" id="lVc-2b-vzi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="g0b-ax-AGs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2311.594202898551" y="-254.46428571428569"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="2hX-KJ-jYs">
             <objects>
@@ -94,6 +167,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="FilterIcon" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

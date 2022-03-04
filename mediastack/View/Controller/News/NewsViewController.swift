@@ -9,23 +9,26 @@ import UIKit
 
 class NewsViewController: UIViewController {
     
-    //MARK: Outlets
+    //MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     
     private var activityIndicator = UIActivityIndicatorView()
     let emptyView:EmptyView = EmptyView()
 
-    //MARK: Instances
+    //MARK: - Instances
     private var newsViewModel : NewsViewModelProtocol!
     private var pageOffset = 0
     
-    //MARK: File Constants
+    //MARK: - File Constants
     fileprivate struct Constant{
         static let cellIdentifier = "NewsTableViewCell"
         static let pageLimit = 10
+        static let activityIndicatorFrameHeight = 44
+        static let newsDetailStoryboardIdentifier = "NewsDetailViewController"
+        static let newsFilterStoryboardIdentifier = "NewsFilterViewController"
     }
     
-    //MARK: Lifecycle viewDidLoad
+    //MARK: - Lifecycle viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -40,7 +43,7 @@ class NewsViewController: UIViewController {
         }
     }
 
-    //MARK: Configure TableView
+    //MARK: - Configure TableView
     
     private func configureTableView(){
         self.tableView.dataSource = self
@@ -50,12 +53,12 @@ class NewsViewController: UIViewController {
         self.tableView.register(view: NewsTableViewCell.self)
     }
    
-    //MARK: Fetch News from API
+    //MARK: - Fetch News from API
     
-    private func fetchNews(){
+    private func fetchNews(_ categories:String?="",_ countries: String?="",_ languages:String?=""){
         
         //TODO: Make filter dynamic i.e sources, categories, countries, languages, keywords & sort
-        newsViewModel.liveNews(sources: "", categories: "business,sports", countries: "us,au", languages: "en", keywords: "", sort: "published_desc", offset: pageOffset, limit: Constant.pageLimit) {
+        newsViewModel.liveNews(sources: "" , categories: categories ?? "business,sports" , countries: countries ?? "", languages: languages ?? "", keywords: "", sort: "published_desc", offset: pageOffset, limit: Constant.pageLimit) {
             
             if let newsFeeds = self.newsViewModel.newsList, newsFeeds.count > 0{
                 //To be on safer side reload table data on main thread after background API call
@@ -64,15 +67,17 @@ class NewsViewController: UIViewController {
                     self.tableView.reloadData()
                 }
             }else{
-                DispatchQueue.main.async {
-                    self.tableView.isUserInteractionEnabled = false
-                    self.showEmptyView(emptyType: .noNewsData)
+                if let error = self.newsViewModel.error{
+                    DispatchQueue.main.async {
+                        self.tableView.isUserInteractionEnabled = false
+                        self.showEmptyView(emptyType: .noNewsData, error)
+                    }
                 }
             }
         }
     }
     
-    //MARK: Pagination
+    //MARK: - Pagination
     private func applyPagination(indexPath:IndexPath){
 
         guard let newsList = newsViewModel.newsList else{return}
@@ -86,33 +91,46 @@ class NewsViewController: UIViewController {
     
     private func configureActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
-        activityIndicator.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+        activityIndicator.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(Constant.activityIndicatorFrameHeight))
         activityIndicator.startAnimating()
         self.tableView.tableFooterView = activityIndicator
         self.tableView.tableFooterView?.isHidden = false
     }
     
-    //MARK: EmptyView
-    private func showEmptyView(emptyType: EmptyViewType){
+    //MARK: - EmptyView
+    private func showEmptyView(emptyType: EmptyViewType, _ error: ApiError? = nil){
         
         self.emptyView.frame = view.bounds
         self.emptyView.delegate = self
         self.emptyView.emptyType = emptyType //Pass empty type enum case to manage specific type of empty data
-        self.emptyView.setUpEmptyView()
+        if let apiError = error{
+            self.emptyView.setUpEmptyView(apiError)
+        }else{
+            self.emptyView.setUpEmptyView()
+        }
         self.tableView.addSubview(self.emptyView)
         
     }
     
     // MARK: - Navigation
     private func showNewsDetail(news:News){
-        let storyboard = UIStoryboard(name:"Main", bundle: nil)
-        let newsDetailController : NewsDetailViewController = storyboard.instantiateViewController(withIdentifier: "NewsDetailViewController") as! NewsDetailViewController
+        let storyboard = UIStoryboard(name:AppConstant.mainStorboard, bundle: nil)
+        let newsDetailController : NewsDetailViewController = storyboard.instantiateViewController(withIdentifier: Constant.newsDetailStoryboardIdentifier) as! NewsDetailViewController
         newsDetailController.newsDetailViewModel = NewsDetailViewModel(news: news)//Initialize ViewModel & pass required depdendencies.
         self.navigationController?.pushViewController(newsDetailController, animated: true)
     }
+    
+    @IBAction func filterBarButtonClicked(_ sender: Any) {
+        let storyboard = UIStoryboard(name:AppConstant.mainStorboard, bundle: nil)
+        let newsFilterController : NewsFilterViewController = storyboard.instantiateViewController(withIdentifier: Constant.newsFilterStoryboardIdentifier) as! NewsFilterViewController
+        newsFilterController.newsFilterViewModel = NewsFilterViewModel()
+        newsFilterController.delegate = self
+        self.present(newsFilterController, animated: true, completion: nil)
+    }
+    
 }
 
-//MARK: EmptyViewDelegate
+//MARK: - EmptyViewDelegate
 extension NewsViewController: EmptyViewDelegate{
     func refreshClicked() {
         if Reachbility.isConnected{
@@ -124,7 +142,14 @@ extension NewsViewController: EmptyViewDelegate{
     }
 }
 
-//MARK: UITableView DataSource
+//MARK: - NewsFilterDelegate
+extension NewsViewController: NewsFilterDelegate{
+    func applyFilter(category: [String], country: [String], language: [String]) {
+        fetchNews(category.joined(separator: ","),country.joined(separator: ","),language.joined(separator: ","))
+    }
+}
+
+//MARK: - UITableViewDataSource
 extension NewsViewController: UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -154,7 +179,7 @@ extension NewsViewController: UITableViewDataSource{
     }
 }
 
-//MARK: UITableView Delegate
+//MARK: - UITableViewDelegate
 extension NewsViewController: UITableViewDelegate{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

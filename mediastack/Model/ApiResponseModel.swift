@@ -18,33 +18,35 @@ struct ApiResponseModel<T : Codable>: Codable {
     
     var pagination: Pagination?
     var data : T?
-
+    var error: ApiError?
+    
     enum CodingKeys: String, CodingKey {
         case pagination = "pagination"
         case data = "data"
-
+        case error = "error"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.pagination = try container.decodeIfPresent(Pagination.self, forKey: .pagination)
         self.data = try container.decodeIfPresent(T.self, forKey: .data)
+        self.error = try container.decodeIfPresent(ApiError.self, forKey: .error)
     }
 }
 
 struct ApiError: Codable {
 
     var message: String
-    var documentationUrl: String
+    var code: String
    
     enum CodingKeys: String, CodingKey {
         case message = "message"
-        case documentationUrl = "documentation_url"
+        case code = "code"
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.message = try container.decodeIfPresent(String.self, forKey: .message) ?? ""
-        self.documentationUrl = try container.decodeIfPresent(String.self, forKey: .documentationUrl) ?? ""
+        self.code = try container.decodeIfPresent(String.self, forKey: .code) ?? ""
     }
 }

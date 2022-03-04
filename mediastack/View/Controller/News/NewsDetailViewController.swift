@@ -10,13 +10,13 @@ import WebKit
 
 class NewsDetailViewController: UIViewController {
 
-    //MARK: Outlets
+    //MARK: - Outlets
     @IBOutlet weak var webView: WKWebView!
     
-    //MARK: Instances    
+    //MARK: - Instances    
      var newsDetailViewModel : NewsDetailViewModelProtocol!
 
-    //MARK: Lifecycle
+    //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

@@ -10,7 +10,7 @@ import SDWebImage
 
 class NewsTableViewCell: UITableViewCell, ViewReusable {
 
-    //MARK: Outlets
+    //MARK: - Outlets
     @IBOutlet weak var sourceLabel: UILabel!
     @IBOutlet weak var sourceImageView: UIImageView!
     @IBOutlet weak var publishedLabel: UILabel!
@@ -20,14 +20,14 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var newsImageView: UIImageView!
     
-    //MARK: Instances
+    //MARK: - Instances
     var newsItem:News?  {
         didSet{
             configureCell()
         }
     }
     
-    //MARK: Fileprivate constant
+    //MARK: - Fileprivate constant
     fileprivate struct Constant{
         static let author = "Author"
         static let category = "Category"
@@ -50,7 +50,7 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
         // Configure the view for the selected state
     }
     
-    //MARK: Populate news cell information
+    //MARK: - Populate news cell information
     private func configureCell(){
         newsImageView.image = UIImage(named: AppConstant.imagePlaceholder)
 

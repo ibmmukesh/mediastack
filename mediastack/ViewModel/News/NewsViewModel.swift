@@ -7,13 +7,14 @@
 
 import Foundation
 
-//MARK: NewsViewModelProtocol to manage I/O Binding.
+//MARK: - NewsViewModelProtocol to manage I/O Binding.
 protocol NewsViewModelProtocol{
     
     //Input, Output
     var newsList:[News]? {get}
     var pagination : Pagination? { get set}
     var paginationDidChange: ((NewsViewModelProtocol) -> ())? { get set } // function to call when instance did change
+    var error:ApiError? {get}
 
     //Initializer
     init(newsWebService:NewsWebservices?)
@@ -27,7 +28,7 @@ protocol NewsViewModelProtocol{
     func detailsForCell(indexPath:IndexPath)->News?
 }
 
-//MARK: NewsViewModel to handle business logic
+//MARK: - NewsViewModel to handle business logic
 
 class NewsViewModel: NewsViewModelProtocol{
     
@@ -48,10 +49,14 @@ class NewsViewModel: NewsViewModelProtocol{
             self.paginationDidChange?(self)
         }
     }
+    internal var error: ApiError? {
+        return apiError
+    }
+    
     
     var paginationDidChange: ((NewsViewModelProtocol) -> ())?
     private var newsItems = [News]()
-    
+    private var apiError : ApiError?
     //Function to call live news webservice
     func liveNews(sources: String, categories: String, countries: String, languages: String, keywords: String, sort: String, offset: Int, limit: Int, completion: @escaping emptyCompletionHandler) {
         
@@ -61,11 +66,17 @@ class NewsViewModel: NewsViewModelProtocol{
 
             switch response {
             case .success(value: let response) :
-                if let newsFeed = response.data, newsFeed.count > 0 {
-                    self.newsItems += newsFeed
-                }
-                if let pagination = response.pagination {
-                    self.pagination = pagination
+                if let error = response.error{
+                    // If any error occurre in response as per API architectecture kind of data not available, subscription excceed.
+                    self.apiError = error
+                }else{
+                    //Success
+                    if let newsFeed = response.data, newsFeed.count > 0 {
+                        self.newsItems += newsFeed
+                    }
+                    if let pagination = response.pagination {
+                        self.pagination = pagination
+                    }
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -76,7 +87,7 @@ class NewsViewModel: NewsViewModelProtocol{
     }
 }
 
-//MARK: Extension to return TableView News business logic
+//MARK: - Extension to return TableView News business logic
 extension NewsViewModel{
     
     internal  func numberOfSection()->Int {

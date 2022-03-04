@@ -41,7 +41,7 @@ class EmptyView: UIView {
         addSubview(viewFromXib)
     }
     
-    internal func setUpEmptyView() {
+    internal func setUpEmptyView(_ error: ApiError? = nil) {
         self.refreshButton.curveAllCorners(withRadius: 8.0)
         switch emptyType{
         case .noInternet:
@@ -49,7 +49,11 @@ class EmptyView: UIView {
             self.noDataImageView.image = UIImage(named: AppConstant.noInternetIcon)
             break
         case .noNewsData:
-            messageLabel.text = AppConstant.noNewsData
+            if let apiError = error{
+                messageLabel.text = apiError.message
+            }else{
+                messageLabel.text = AppConstant.noNewsData
+            }
             self.noDataImageView.image = UIImage(named: AppConstant.imagePlaceholder)
             break
         }
