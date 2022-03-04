@@ -49,3 +49,14 @@ Application will work in online mode. Handle no network/data conditions.
 <br>
  <img height="700" src="https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-03%20at%2016.07.06.png "/>
  <br>
+ 
+ - Filter scene
+<br>
+ <img height="700" src="https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-04%20at%2012.00.32.png"/>
+ <br>
+ 
+ - Server error scene
+<br>
+ <img height="700" src="https://github.com/mukeshlokare/ImagesFiles/blob/master/Simulator%20Screen%20Shot%20-%20iPhone%2011%20-%202022-03-04%20at%2012.01.27.png"/>
+ <br>
+ 
