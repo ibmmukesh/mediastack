@@ -9,19 +9,21 @@ import Foundation
 
 
 extension ApiTargetType {
-  
-//  var baseURL: URL {
-//    print("\(AppConstant.API.baseURL)")
-//    return URL(string: AppConstant.API.baseURL)!
-//  }
-  
+    
+    //BaseURL based on environment
+    var baseURL: String {
+        print("\(AppConstant.API.baseURL)")
+        return AppConstant.API.baseURL
+    }
+    
+    //Default Parameters
     func defaultParams() -> [String: Any]? {
-        if let token = KeychainHelper.standard.read(service: "token",
-                                                  account: "mediastack.com",
+        if let token = KeychainHelper.standard.read(service: AppConstant.secAttribServiceKey,
+                                                    account: AppConstant.secAttribAccount,
                                                     type: String.self){
-            return ["access_key":token]
+            return ["access_key":token] //Default Key-Value needs to send with API request.
         }
         return ["":""]
     }
-  
+    
 }

@@ -32,7 +32,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="News" id="5wk-3x-TlO">
                         <barButtonItem key="rightBarButtonItem" image="FilterIcon" id="LbA-1E-NSU">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="filterBarButtonClicked:" destination="BYZ-38-t0r" id="Q6J-5b-0Gt"/>
                             </connections>

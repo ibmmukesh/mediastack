@@ -21,9 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func saveTokenToKeyChain(){
         // Create an object to save
-        let accessToken = AppConstant.apiAccessKey
-        let account = "mediastack.com"
-        let service = "token"
+        let accessToken = AppConstant.API.apiAccessKey
+        let account = AppConstant.secAttribAccount
+        let service = AppConstant.secAttribServiceKey
         // Save `auth` to keychain
         KeychainHelper.standard.save(accessToken, service: service, account: account)
     }

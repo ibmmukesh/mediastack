@@ -10,9 +10,6 @@ import Alamofire
 
 public protocol ApiTargetType {
 
-    /// The target's base `URL`.
-    var baseURL: URL { get }
-
     /// The path to be appended to `baseURL` to form the full `URL`.
     var path: String { get }
 

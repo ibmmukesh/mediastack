@@ -20,8 +20,6 @@ enum NewsAPI {
 
 extension NewsAPI: ApiTargetType {
     
-    public var baseURL: URL { return URL(string: AppConstant.baseURL)! }
-
     //Path to return the complete request URL, i.e BaseURL + EndURL
     var path: String {
         var servicePath = ""
@@ -29,7 +27,7 @@ extension NewsAPI: ApiTargetType {
         case .liveNews:
             servicePath = "/v1/news"
         }
-        return AppConstant.baseURL + servicePath
+        return self.baseURL.appending(servicePath)
     }
     
     //Headers to the request
