@@ -31,6 +31,7 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
         static let author = "Author"
         static let category = "Category"
         static let unknown = "Unknown"
+        static let googleFavURL = "https://www.google.com/s2/favicons?sz=64&domain="//Google URL to get fav icon based on site. Because source icon image url not given in API response! :)
     }
     
     override func awakeFromNib() {
@@ -68,6 +69,18 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
             self.categoryLabel.text = "\(Constant.category): \(category)"
         }else{
             self.categoryLabel.text = "\(Constant.category): \(Constant.unknown)"
+        }
+        
+        if let imageURLStr = newsItem?.image{
+            self.newsImageView.setImage(url: imageURLStr, placeholderImage: UIImage(named: "ImagePlaceholder"))
+        }else{
+            self.newsImageView.image = UIImage(named: "ImagePlaceholder")
+        }
+        
+        if let imageURLStr = newsItem?.url{
+            self.sourceImageView.setImage(url: "\(Constant.googleFavURL)\(imageURLStr)", placeholderImage: UIImage(named: "MediaIcon"))
+        }else{
+            self.sourceImageView.image = UIImage(named: "MediaIcon")
         }
     }
 }

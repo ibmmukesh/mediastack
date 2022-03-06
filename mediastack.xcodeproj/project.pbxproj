@@ -138,6 +138,15 @@
 		7538C0C727D4B28100E586F2 /* ProgressHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0C627D4B28100E586F2 /* ProgressHud.swift */; };
 		7538C0C827D4B28100E586F2 /* ProgressHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0C627D4B28100E586F2 /* ProgressHud.swift */; };
 		7538C0C927D4B28100E586F2 /* ProgressHud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0C627D4B28100E586F2 /* ProgressHud.swift */; };
+		7538C0CE27D4CF7500E586F2 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0CD27D4CF7500E586F2 /* ImageDownloader.swift */; };
+		7538C0CF27D4CF7500E586F2 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0CD27D4CF7500E586F2 /* ImageDownloader.swift */; };
+		7538C0D027D4CF7500E586F2 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0CD27D4CF7500E586F2 /* ImageDownloader.swift */; };
+		7538C0D227D4CFA600E586F2 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0D127D4CFA600E586F2 /* ImageDownloadManager.swift */; };
+		7538C0D327D4CFA600E586F2 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0D127D4CFA600E586F2 /* ImageDownloadManager.swift */; };
+		7538C0D427D4CFA600E586F2 /* ImageDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0D127D4CFA600E586F2 /* ImageDownloadManager.swift */; };
+		7538C0D627D4CFE300E586F2 /* UIImageView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0D527D4CFE300E586F2 /* UIImageView+Cache.swift */; };
+		7538C0D727D4CFE300E586F2 /* UIImageView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0D527D4CFE300E586F2 /* UIImageView+Cache.swift */; };
+		7538C0D827D4CFE300E586F2 /* UIImageView+Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7538C0D527D4CFE300E586F2 /* UIImageView+Cache.swift */; };
 		754D4AB027D0EB1400C422C6 /* NewsAPIValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754D4AAF27D0EB1400C422C6 /* NewsAPIValidator.swift */; };
 		754D4AB127D0EB1400C422C6 /* NewsAPIValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754D4AAF27D0EB1400C422C6 /* NewsAPIValidator.swift */; };
 		7555E1F427D1B134005BCD8B /* NewsFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555E1F227D1B134005BCD8B /* NewsFilterCollectionViewCell.swift */; };
@@ -221,6 +230,9 @@
 		7538C0BC27D4AB0A00E586F2 /* Storyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboard.swift; sourceTree = "<group>"; };
 		7538C0C227D4AB5D00E586F2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		7538C0C627D4B28100E586F2 /* ProgressHud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressHud.swift; sourceTree = "<group>"; };
+		7538C0CD27D4CF7500E586F2 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
+		7538C0D127D4CFA600E586F2 /* ImageDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloadManager.swift; sourceTree = "<group>"; };
+		7538C0D527D4CFE300E586F2 /* UIImageView+Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Cache.swift"; sourceTree = "<group>"; };
 		754D4AAF27D0EB1400C422C6 /* NewsAPIValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPIValidator.swift; sourceTree = "<group>"; };
 		7555E1F227D1B134005BCD8B /* NewsFilterCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		7555E1F327D1B134005BCD8B /* NewsFilterCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewsFilterCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -335,7 +347,7 @@
 				750D36BE27CF4A1D002FE7B3 /* ViewModel */,
 				750D36C327CF5788002FE7B3 /* Network */,
 				7538C0B927D4AAAB00E586F2 /* Coordinator */,
-				750D36CA27CF58BF002FE7B3 /* Utils */,
+				750D36CA27CF58BF002FE7B3 /* Utilities */,
 				750D36DA27CF61E6002FE7B3 /* Extension */,
 				7518F46727D23924004FED64 /* Protocol */,
 				754D4AAE27D0EA5800C422C6 /* Test */,
@@ -405,15 +417,16 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		750D36CA27CF58BF002FE7B3 /* Utils */ = {
+		750D36CA27CF58BF002FE7B3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				7538C0CC27D4CF3F00E586F2 /* ImageCache */,
 				750D36CB27CF58D4002FE7B3 /* AppConstant.swift */,
 				75A5127D27D0AF16004228D3 /* NetworkReachability.swift */,
 				75DE36D127D2440B002EB0E7 /* GlobalFunction.swift */,
 				75DE36D727D37E04002EB0E7 /* KeychainHelper.swift */,
 			);
-			path = Utils;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		750D36D127CF5CB0002FE7B3 /* News */ = {
@@ -456,6 +469,7 @@
 				75DE36D327D246E0002EB0E7 /* AppDelegate+.swift */,
 				75DE36DD27D3886D002EB0E7 /* ApiTargetType+Configuration.swift */,
 				75DE36DF27D38A89002EB0E7 /* Dictionary+Configuration.swift */,
+				7538C0D527D4CFE300E586F2 /* UIImageView+Cache.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -533,6 +547,15 @@
 				7538C0C227D4AB5D00E586F2 /* MainCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		7538C0CC27D4CF3F00E586F2 /* ImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				7538C0CD27D4CF7500E586F2 /* ImageDownloader.swift */,
+				7538C0D127D4CFA600E586F2 /* ImageDownloadManager.swift */,
+			);
+			path = ImageCache;
 			sourceTree = "<group>";
 		};
 		754D4AAE27D0EA5800C422C6 /* Test */ = {
@@ -912,6 +935,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7538C0D227D4CFA600E586F2 /* ImageDownloadManager.swift in Sources */,
 				75DE36D427D246E1002EB0E7 /* AppDelegate+.swift in Sources */,
 				7518F46627D23901004FED64 /* ApiTargetType.swift in Sources */,
 				750D36CC27CF58D4002FE7B3 /* AppConstant.swift in Sources */,
@@ -928,6 +952,7 @@
 				750D36C927CF57FF002FE7B3 /* ApiResponseModel.swift in Sources */,
 				75A5126827D09226004228D3 /* NewsDetailViewController.swift in Sources */,
 				750D36C727CF579D002FE7B3 /* APIStatus.swift in Sources */,
+				7538C0CE27D4CF7500E586F2 /* ImageDownloader.swift in Sources */,
 				750D36C227CF4C60002FE7B3 /* NewsViewModel.swift in Sources */,
 				7555E1F727D1B1AA005BCD8B /* UICollectionView+.swift in Sources */,
 				7555E20027D1BB4D005BCD8B /* NewsFilterHeaderCollectionReusableView.swift in Sources */,
@@ -951,6 +976,7 @@
 				75DE36D827D37E04002EB0E7 /* KeychainHelper.swift in Sources */,
 				75A5127E27D0AF16004228D3 /* NetworkReachability.swift in Sources */,
 				75A5127527D09CD7004228D3 /* EmptyView.swift in Sources */,
+				7538C0D627D4CFE300E586F2 /* UIImageView+Cache.swift in Sources */,
 				750D36E727CF78E9002FE7B3 /* ViewReusable.swift in Sources */,
 				7555E1F927D1B48C005BCD8B /* NewsFilterViweModel.swift in Sources */,
 			);
@@ -979,6 +1005,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7538C0D327D4CFA600E586F2 /* ImageDownloadManager.swift in Sources */,
 				7538C00C27D491BE00E586F2 /* AppDelegate+.swift in Sources */,
 				7538C00D27D491BE00E586F2 /* ApiTargetType.swift in Sources */,
 				7538C0C027D4AB0E00E586F2 /* Coordinator.swift in Sources */,
@@ -995,6 +1022,7 @@
 				7538C01727D491BE00E586F2 /* ApiResponseModel.swift in Sources */,
 				7538C01827D491BE00E586F2 /* NewsDetailViewController.swift in Sources */,
 				7538C01927D491BE00E586F2 /* APIStatus.swift in Sources */,
+				7538C0CF27D4CF7500E586F2 /* ImageDownloader.swift in Sources */,
 				7538C01A27D491BE00E586F2 /* NewsViewModel.swift in Sources */,
 				7538C01B27D491BE00E586F2 /* UICollectionView+.swift in Sources */,
 				7538C01C27D491BE00E586F2 /* NewsFilterHeaderCollectionReusableView.swift in Sources */,
@@ -1018,6 +1046,7 @@
 				7538C02D27D491BE00E586F2 /* KeychainHelper.swift in Sources */,
 				7538C02E27D491BE00E586F2 /* NetworkReachability.swift in Sources */,
 				7538C02F27D491BE00E586F2 /* EmptyView.swift in Sources */,
+				7538C0D727D4CFE300E586F2 /* UIImageView+Cache.swift in Sources */,
 				7538C03027D491BE00E586F2 /* ViewReusable.swift in Sources */,
 				7538C03127D491BE00E586F2 /* NewsFilterViweModel.swift in Sources */,
 			);
@@ -1027,6 +1056,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7538C0D427D4CFA600E586F2 /* ImageDownloadManager.swift in Sources */,
 				7538C08127D492F800E586F2 /* AppDelegate+.swift in Sources */,
 				7538C08227D492F800E586F2 /* ApiTargetType.swift in Sources */,
 				7538C0C127D4AB0F00E586F2 /* Coordinator.swift in Sources */,
@@ -1043,6 +1073,7 @@
 				7538C08C27D492F800E586F2 /* ApiResponseModel.swift in Sources */,
 				7538C08D27D492F800E586F2 /* NewsDetailViewController.swift in Sources */,
 				7538C08E27D492F800E586F2 /* APIStatus.swift in Sources */,
+				7538C0D027D4CF7500E586F2 /* ImageDownloader.swift in Sources */,
 				7538C08F27D492F800E586F2 /* NewsViewModel.swift in Sources */,
 				7538C09027D492F800E586F2 /* UICollectionView+.swift in Sources */,
 				7538C09127D492F800E586F2 /* NewsFilterHeaderCollectionReusableView.swift in Sources */,
@@ -1066,6 +1097,7 @@
 				7538C0A227D492F800E586F2 /* KeychainHelper.swift in Sources */,
 				7538C0A327D492F800E586F2 /* NetworkReachability.swift in Sources */,
 				7538C0A427D492F800E586F2 /* EmptyView.swift in Sources */,
+				7538C0D827D4CFE300E586F2 /* UIImageView+Cache.swift in Sources */,
 				7538C0A527D492F800E586F2 /* ViewReusable.swift in Sources */,
 				7538C0A627D492F800E586F2 /* NewsFilterViweModel.swift in Sources */,
 			);

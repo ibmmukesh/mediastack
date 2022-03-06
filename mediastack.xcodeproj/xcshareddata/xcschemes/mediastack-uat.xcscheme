@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7538C07E27D492F800E586F2"
-               BuildableName = "mediastack copy.app"
-               BlueprintName = "mediastack copy"
+               BuildableName = "mediastack-uat.app"
+               BlueprintName = "mediastack-uat"
                ReferencedContainer = "container:mediastack.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7538C07E27D492F800E586F2"
-            BuildableName = "mediastack copy.app"
-            BlueprintName = "mediastack copy"
+            BuildableName = "mediastack-uat.app"
+            BlueprintName = "mediastack-uat"
             ReferencedContainer = "container:mediastack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7538C07E27D492F800E586F2"
-            BuildableName = "mediastack copy.app"
-            BlueprintName = "mediastack copy"
+            BuildableName = "mediastack-uat.app"
+            BlueprintName = "mediastack-uat"
             ReferencedContainer = "container:mediastack.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

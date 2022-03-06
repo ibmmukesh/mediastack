@@ -17,7 +17,6 @@ class NewsViewController: UIViewController, Storyboarded {
     //MARK: - Instances
     private var newsViewModel : NewsViewModelProtocol!
     private var pageOffset = 0
-    var cache = NSCache<AnyObject, AnyObject>()
     
     weak var coordinator: MainCoordinator?
 
@@ -28,7 +27,6 @@ class NewsViewController: UIViewController, Storyboarded {
         static let activityIndicatorFrameHeight = 44
         static let newsDetailStoryboardIdentifier = "NewsDetailViewController"
         static let newsFilterStoryboardIdentifier = "NewsFilterViewController"
-        static let googleFavURL = "https://www.google.com/s2/favicons?sz=64&domain="//Google URL to get fav icon based on site.
     }
     
     //MARK: - Lifecycle viewDidLoad
@@ -140,7 +138,6 @@ extension NewsViewController: UITableViewDataSource{
         
         if let newsList = self.newsViewModel.newsList, newsList.count > 0{
             let newsItem = newsViewModel.detailsForCell(indexPath: indexPath)
-            self.loadSourceAndNewAvatar(newsCell: newsCell, newsItem: newsItem)
             newsCell.newsItem = newsItem
         }
         
@@ -153,48 +150,6 @@ extension NewsViewController: UITableViewDataSource{
         let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
         if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
             self.configureActivityIndicator()
-        }
-    }
-}
-//MARK: - Cache
-extension NewsViewController{
-    
-    private func loadSourceAndNewAvatar(newsCell: NewsTableViewCell, newsItem: News?){
-        
-        if let img = cache.object(forKey: newsItem?.image as AnyObject) {
-            newsCell.newsImageView.image = img as? UIImage
-        }else {
-            DispatchQueue.global().async {
-                if let url = URL(string: newsItem?.image ?? ""){
-                    do{
-                        let data = try Data(contentsOf: url)
-                        DispatchQueue.main.async {
-                            newsCell.newsImageView.image = UIImage(data: data)
-                            self.cache.setObject(UIImage(data: data)!, forKey: newsItem?.image as AnyObject)
-                        }
-                    }catch {
-                        print(error.localizedDescription)
-                    }
-                }
-            }
-        }
-        
-        if let imageURLStr = newsItem?.url{
-            if let imageURL = URL(string: "\(Constant.googleFavURL)\(imageURLStr)"){
-                if let img = cache.object(forKey: imageURL as AnyObject) {
-                    newsCell.sourceImageView.image = img as? UIImage
-                }else {
-                    DispatchQueue.global().async {
-                        let data = NSData(contentsOf: imageURL)
-                        DispatchQueue.main.async {
-                            if let imageData = data{
-                                newsCell.sourceImageView.image = UIImage(data: imageData as Data)
-                                self.cache.setObject(UIImage(data: imageData as Data)!, forKey: newsItem?.image as AnyObject)
-                            }
-                        }
-                    }
-                }
-            }
         }
     }
 }
