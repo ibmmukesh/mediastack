@@ -8,13 +8,14 @@
 import UIKit
 import WebKit
 
-class NewsDetailViewController: UIViewController {
+class NewsDetailViewController: UIViewController, Storyboarded {
 
     //MARK: - Outlets
     @IBOutlet weak var webView: WKWebView!
     
     //MARK: - Instances    
      var newsDetailViewModel : NewsDetailViewModelProtocol!
+    weak var coordinator: MainCoordinator?
 
     //MARK: - Lifecycle
     override func viewDidLoad() {

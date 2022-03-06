@@ -41,18 +41,20 @@ class GlobalFunction{
 
     static func showEmptyView(_ emptyType: EmptyViewType? = .serverError, _ error: ApiError? = nil){
         
-        let topVC = GlobalFunction.topViewController()
-        let emptyView:EmptyView = EmptyView()
-        emptyView.delegate = topVC as? EmptyViewDelegate
-        if let topVCView = topVC?.view{
-            emptyView.frame = topVCView.bounds
-            emptyView.emptyType = emptyType ?? .serverError //Pass empty type enum case to manage specific type of empty data
-            if let apiError = error{
-                emptyView.setUpEmptyView(apiError)
-            }else{
-                emptyView.setUpEmptyView()
+        DispatchQueue.main.async {
+            let topVC = GlobalFunction.topViewController()
+            let emptyView:EmptyView = EmptyView()
+            emptyView.delegate = topVC as? EmptyViewDelegate
+            if let topVCView = topVC?.view{
+                emptyView.frame = topVCView.bounds
+                emptyView.emptyType = emptyType ?? .serverError //Pass empty type enum case to manage specific type of empty data
+                if let apiError = error{
+                    emptyView.setUpEmptyView(apiError)
+                }else{
+                    emptyView.setUpEmptyView()
+                }
+                topVCView.addSubview(emptyView)
             }
-            topVCView.addSubview(emptyView)
         }
     }
 }

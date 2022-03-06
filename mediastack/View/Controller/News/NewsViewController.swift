@@ -7,19 +7,20 @@
 
 import UIKit
 
-class NewsViewController: UIViewController {
+class NewsViewController: UIViewController, Storyboarded {
     
     //MARK: - Outlets
     @IBOutlet weak var tableView: UITableView!
     
     private var activityIndicator = UIActivityIndicatorView()
-    let emptyView:EmptyView = EmptyView()
     
     //MARK: - Instances
     private var newsViewModel : NewsViewModelProtocol!
     private var pageOffset = 0
     var cache = NSCache<AnyObject, AnyObject>()
     
+    weak var coordinator: MainCoordinator?
+
     //MARK: - File Constants
     fileprivate struct Constant{
         static let cellIdentifier = "NewsTableViewCell"
@@ -37,6 +38,7 @@ class NewsViewController: UIViewController {
         
         newsViewModel = NewsViewModel(newsWebService: NewsWebservices())//Initialize ViewModel & pass required depdendencies.
         configureTableView()
+        ProgressHud.sharedInstance.show(view: self.view)
         fetchNews()
     }
     
@@ -60,6 +62,7 @@ class NewsViewController: UIViewController {
         newsViewModel.liveNews(parameter:parameter) {
             //To be on safer side reload table data on main thread after background API call
             DispatchQueue.main.async {
+                ProgressHud.sharedInstance.hide()
                 self.loadData()
             }
         }
@@ -93,23 +96,22 @@ class NewsViewController: UIViewController {
     
     // MARK: - Navigation
     private func showNewsDetail(news:News){
-        let storyboard = UIStoryboard(name:AppConstant.mainStorboard, bundle: nil)
-        let newsDetailController : NewsDetailViewController = storyboard.instantiateViewController(withIdentifier: Constant.newsDetailStoryboardIdentifier) as! NewsDetailViewController
-        newsDetailController.newsDetailViewModel = NewsDetailViewModel(news: news)//Initialize ViewModel & pass required depdendencies.
-        self.navigationController?.pushViewController(newsDetailController, animated: true)
+        coordinator?.showNewsDetail(news: news)
     }
     
     @IBAction func filterBarButtonClicked(_ sender: Any) {
-        let storyboard = UIStoryboard(name:AppConstant.mainStorboard, bundle: nil)
-        let newsFilterController : NewsFilterViewController = storyboard.instantiateViewController(withIdentifier: Constant.newsFilterStoryboardIdentifier) as! NewsFilterViewController
-        newsFilterController.newsFilterViewModel = NewsFilterViewModel()
-        newsFilterController.onFilterAppy = {[weak self](category, country, language) in
+        coordinator?.showNewsFilter(completion: { [weak self] (category, country, language) in
             guard let self = self else { return }
-            self.fetchNews(category.joined(separator: ","),country.joined(separator: ","),language.joined(separator: ","))
-        }
-        self.present(newsFilterController, animated: true, completion: nil)
+            for tempView in self.view.subviews{//Remove Existing EmptyView.
+                if let emptyView = tempView as? EmptyView{
+                    emptyView.removeFromSuperview()
+                }
+            }
+            self.fetchNews(category.joined(separator: ","),
+                           country.joined(separator: ","),
+                           language.joined(separator: ","))
+        })
     }
-    
 }
 
 ////MARK: - EmptyViewDelegate

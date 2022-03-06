@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewsFilterViewController: UIViewController {
+class NewsFilterViewController: UIViewController, Storyboarded {
     
     //MARK: - Outlets
     @IBOutlet weak var collectionView: UICollectionView!
@@ -18,7 +18,9 @@ class NewsFilterViewController: UIViewController {
     var arrSelectedCountry = [IndexPath]() // This is selected cell Index array
     var arrSelectedLanguage = [IndexPath]() // This is selected cell Index array
     
-    var onFilterAppy: ((_ category:[String], _ country:[String], _ language:[String]) -> Void)?
+    var onFilterAppy: onFilterAppy!//((_ category:[String], _ country:[String], _ language:[String]) -> Void)?
+
+    weak var coordinator: MainCoordinator?
 
     //MARK: - File Constants
     fileprivate struct Constant{
@@ -40,7 +42,7 @@ class NewsFilterViewController: UIViewController {
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.register(view: NewsFilterCollectionViewCell.self)
-        self.collectionView.backgroundColor = UIColor.coolWhite
+//        self.collectionView.backgroundColor = UIColor.coolWhite
         let filtercell = UINib.init(nibName: Constant.newsFilterHeaderIdentifier, bundle: Bundle.main)
         collectionView.register(filtercell, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Constant.newsFilterHeaderIdentifier)
     }

@@ -34,10 +34,7 @@ struct NetworkManager<U: ApiTargetType>: NetworkManagerProtocol {
     }()
     
     internal func requestObject<T: Codable>(service:U, completionHandler: @escaping(ApiResponse<T>)->()) {
-        if !Reachbility.isConnected{
-            GlobalFunction.showEmptyView(.noInternet, nil)
-            return
-        }
+        
         var parameters = service.defaultParams()
         parameters?.append(anotherDict: service.parameters ?? [String:Any]())
         
@@ -99,7 +96,10 @@ extension NetworkManager{
     }
     
     private func showErrorPopup(_ emptyType:EmptyViewType? = .serverError, _ error:ApiError? = nil){
-        DispatchQueue.main.async {
+        if !Reachbility.isConnected{
+            GlobalFunction.showEmptyView(.noInternet, nil)
+            return
+        }else{
             GlobalFunction.showEmptyView(emptyType, error)
         }
     }
