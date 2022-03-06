@@ -11,8 +11,6 @@ protocol NewsFilterViewModelProtocol{
     var newsFilterModels:[NewsFilterModel]? {get}
     
     //Collection View Data
-    func numberOfSection()->Int
-    func numberOfItems(section: Int)->Int
     func detailsForCell(indexPath:IndexPath)-> String?
     func headerTitle(indexPath:IndexPath)-> String?
 }
@@ -36,14 +34,6 @@ class NewsFilterViewModel: NewsFilterViewModelProtocol{
 
 //MARK: - Extension to return CollectionView business logic
 extension NewsFilterViewModel{
-    
-    internal  func numberOfSection()->Int {
-        return self.newsFilterModels?.count ?? 0
-    }
-    
-    internal func numberOfItems(section:Int)->Int {
-        return self.newsFilterModels?[section].filters.count ?? 0
-    }
     
     internal func detailsForCell(indexPath: IndexPath)-> String? {
         return self.newsFilterModels?[indexPath.section].filters[indexPath.item]

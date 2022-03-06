@@ -11,7 +11,6 @@
 import Foundation
 
 struct NewsParameter: Codable {
-    var access_key : String
     var sources : String?
     var categories : String?
     var countries : String?

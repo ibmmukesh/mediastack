@@ -14,10 +14,11 @@ class NewsViewController: UIViewController {
     
     private var activityIndicator = UIActivityIndicatorView()
     let emptyView:EmptyView = EmptyView()
-
+    
     //MARK: - Instances
     private var newsViewModel : NewsViewModelProtocol!
     private var pageOffset = 0
+    var cache = NSCache<AnyObject, AnyObject>()
     
     //MARK: - File Constants
     fileprivate struct Constant{
@@ -26,6 +27,7 @@ class NewsViewController: UIViewController {
         static let activityIndicatorFrameHeight = 44
         static let newsDetailStoryboardIdentifier = "NewsDetailViewController"
         static let newsFilterStoryboardIdentifier = "NewsFilterViewController"
+        static let googleFavURL = "https://www.google.com/s2/favicons?sz=64&domain="//Google URL to get fav icon based on site.
     }
     
     //MARK: - Lifecycle viewDidLoad
@@ -35,14 +37,9 @@ class NewsViewController: UIViewController {
         
         newsViewModel = NewsViewModel(newsWebService: NewsWebservices())//Initialize ViewModel & pass required depdendencies.
         configureTableView()
-        
-        if Reachbility.isConnected{
-            fetchNews()
-        }else{
-            self.showEmptyView(emptyType:.noInternet)
-        }
+        fetchNews()
     }
-
+    
     //MARK: - Configure TableView
     
     private func configureTableView(){
@@ -52,34 +49,31 @@ class NewsViewController: UIViewController {
         self.tableView.estimatedRowHeight = UITableView.automaticDimension
         self.tableView.register(view: NewsTableViewCell.self)
     }
-   
+    
     //MARK: - Fetch News from API
     
     private func fetchNews(_ categories:String?="",_ countries: String?="",_ languages:String?=""){
         
+        let parameter = NewsParameter(sources: "", categories: categories ?? "business,sports", countries: countries ?? "", languages: languages ?? "", keywords: "", sort: "published_desc", offset: pageOffset, limit: Constant.pageLimit)
+        
         //TODO: Make filter dynamic i.e sources, categories, countries, languages, keywords & sort
-        newsViewModel.liveNews(sources: "" , categories: categories ?? "business,sports" , countries: countries ?? "", languages: languages ?? "", keywords: "", sort: "published_desc", offset: pageOffset, limit: Constant.pageLimit) {
-            
-            if let newsFeeds = self.newsViewModel.newsList, newsFeeds.count > 0{
-                //To be on safer side reload table data on main thread after background API call
-                DispatchQueue.main.async {
-                    self.tableView.isUserInteractionEnabled = true
-                    self.tableView.reloadData()
-                }
-            }else{
-                if let error = self.newsViewModel.error{
-                    DispatchQueue.main.async {
-                        self.tableView.isUserInteractionEnabled = false
-                        self.showEmptyView(emptyType: .noNewsData, error)
-                    }
-                }
+        newsViewModel.liveNews(parameter:parameter) {
+            //To be on safer side reload table data on main thread after background API call
+            DispatchQueue.main.async {
+                self.loadData()
             }
         }
     }
     
+    private func loadData(){
+        if let newsFeeds = self.newsViewModel.newsList, newsFeeds.count > 0{
+            self.tableView.isUserInteractionEnabled = true
+            self.tableView.reloadData()
+        }
+    }
     //MARK: - Pagination
     private func applyPagination(indexPath:IndexPath){
-
+        
         guard let newsList = newsViewModel.newsList else{return}
         if indexPath.row == newsList.count - 1 { //Check last cell in the tableview
             if newsViewModel.pagination?.total ?? 0 > newsList.count{//Check total number of news & previous fetched news
@@ -97,21 +91,6 @@ class NewsViewController: UIViewController {
         self.tableView.tableFooterView?.isHidden = false
     }
     
-    //MARK: - EmptyView
-    private func showEmptyView(emptyType: EmptyViewType, _ error: ApiError? = nil){
-        
-        self.emptyView.frame = view.bounds
-        self.emptyView.delegate = self
-        self.emptyView.emptyType = emptyType //Pass empty type enum case to manage specific type of empty data
-        if let apiError = error{
-            self.emptyView.setUpEmptyView(apiError)
-        }else{
-            self.emptyView.setUpEmptyView()
-        }
-        self.tableView.addSubview(self.emptyView)
-        
-    }
-    
     // MARK: - Navigation
     private func showNewsDetail(news:News){
         let storyboard = UIStoryboard(name:AppConstant.mainStorboard, bundle: nil)
@@ -124,28 +103,19 @@ class NewsViewController: UIViewController {
         let storyboard = UIStoryboard(name:AppConstant.mainStorboard, bundle: nil)
         let newsFilterController : NewsFilterViewController = storyboard.instantiateViewController(withIdentifier: Constant.newsFilterStoryboardIdentifier) as! NewsFilterViewController
         newsFilterController.newsFilterViewModel = NewsFilterViewModel()
-        newsFilterController.delegate = self
+        newsFilterController.onFilterAppy = {[weak self](category, country, language) in
+            guard let self = self else { return }
+            self.fetchNews(category.joined(separator: ","),country.joined(separator: ","),language.joined(separator: ","))
+        }
         self.present(newsFilterController, animated: true, completion: nil)
     }
     
 }
 
-//MARK: - EmptyViewDelegate
+////MARK: - EmptyViewDelegate
 extension NewsViewController: EmptyViewDelegate{
     func refreshClicked() {
-        if Reachbility.isConnected{
-            self.emptyView.removeFromSuperview()
-            fetchNews()
-        }else{
-            self.showEmptyView(emptyType:.noInternet)
-        }
-    }
-}
-
-//MARK: - NewsFilterDelegate
-extension NewsViewController: NewsFilterDelegate{
-    func applyFilter(category: [String], country: [String], language: [String]) {
-        fetchNews(category.joined(separator: ","),country.joined(separator: ","),language.joined(separator: ","))
+        fetchNews()
     }
 }
 
@@ -153,11 +123,11 @@ extension NewsViewController: NewsFilterDelegate{
 extension NewsViewController: UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return newsViewModel.numberOfSection()
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsViewModel.numberOfRows()
+        return self.newsViewModel.newsList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -165,7 +135,13 @@ extension NewsViewController: UITableViewDataSource{
         guard let newsCell = tableView.dequeueReusableCell(withIdentifier: Constant.cellIdentifier) as? NewsTableViewCell else {
             return UITableViewCell()
         }
-        newsCell.newsItem = newsViewModel.detailsForCell(indexPath: indexPath)
+        
+        if let newsList = self.newsViewModel.newsList, newsList.count > 0{
+            let newsItem = newsViewModel.detailsForCell(indexPath: indexPath)
+            self.loadSourceAndNewAvatar(newsCell: newsCell, newsItem: newsItem)
+            newsCell.newsItem = newsItem
+        }
+        
         self.applyPagination(indexPath: indexPath)
         return newsCell
     }
@@ -175,6 +151,48 @@ extension NewsViewController: UITableViewDataSource{
         let lastRowIndex = tableView.numberOfRows(inSection: lastSectionIndex) - 1
         if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
             self.configureActivityIndicator()
+        }
+    }
+}
+//MARK: - Cache
+extension NewsViewController{
+    
+    private func loadSourceAndNewAvatar(newsCell: NewsTableViewCell, newsItem: News?){
+        
+        if let img = cache.object(forKey: newsItem?.image as AnyObject) {
+            newsCell.newsImageView.image = img as? UIImage
+        }else {
+            DispatchQueue.global().async {
+                if let url = URL(string: newsItem?.image ?? ""){
+                    do{
+                        let data = try Data(contentsOf: url)
+                        DispatchQueue.main.async {
+                            newsCell.newsImageView.image = UIImage(data: data)
+                            self.cache.setObject(UIImage(data: data)!, forKey: newsItem?.image as AnyObject)
+                        }
+                    }catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+        }
+        
+        if let imageURLStr = newsItem?.url{
+            if let imageURL = URL(string: "\(Constant.googleFavURL)\(imageURLStr)"){
+                if let img = cache.object(forKey: imageURL as AnyObject) {
+                    newsCell.sourceImageView.image = img as? UIImage
+                }else {
+                    DispatchQueue.global().async {
+                        let data = NSData(contentsOf: imageURL)
+                        DispatchQueue.main.async {
+                            if let imageData = data{
+                                newsCell.sourceImageView.image = UIImage(data: imageData as Data)
+                                self.cache.setObject(UIImage(data: imageData as Data)!, forKey: newsItem?.image as AnyObject)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

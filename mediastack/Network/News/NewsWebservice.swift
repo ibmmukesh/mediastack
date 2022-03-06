@@ -12,6 +12,7 @@ import Foundation
 
 protocol NewsWebservicesProtocol {
     func liveNews(parameter: NewsParameter, completionHandler: @escaping(ApiResponse<ApiResponseModel<[News]>>)->())
+    //News module related apis function
 }
  
 struct NewsWebservices: NewsWebservicesProtocol {
@@ -23,7 +24,7 @@ struct NewsWebservices: NewsWebservicesProtocol {
     }
         
     internal func liveNews(parameter: NewsParameter, completionHandler: @escaping (ApiResponse<ApiResponseModel<[News]>>) -> ()) {
-        service.requestObject(path: .liveNews(parameters: parameter.toJSON(param: parameter)), completionHandler: completionHandler)
+        service.requestObject(service: .liveNews(parameters: parameter.toJSON(param: parameter)), completionHandler: completionHandler)
     }
 }
 

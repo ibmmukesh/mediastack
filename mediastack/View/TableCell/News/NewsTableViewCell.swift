@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SDWebImage
 
 class NewsTableViewCell: UITableViewCell, ViewReusable {
 
@@ -32,7 +31,6 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
         static let author = "Author"
         static let category = "Category"
         static let unknown = "Unknown"
-        static let googleFavURL = "https://www.google.com/s2/favicons?sz=64&domain="//Google URL to get fav icon based on site.
     }
     
     override func awakeFromNib() {
@@ -70,19 +68,6 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
             self.categoryLabel.text = "\(Constant.category): \(category)"
         }else{
             self.categoryLabel.text = "\(Constant.category): \(Constant.unknown)"
-        }
-        
-        if let imageURLStr = newsItem?.image{
-            if let imageURL = URL(string: imageURLStr){
-                self.newsImageView.sd_setImage(with: imageURL, placeholderImage: UIImage(named: AppConstant.imagePlaceholder) , options: .progressiveLoad, context: nil)
-            }
-        }
-        
-        if let imageURLStr = newsItem?.url{
-            if let imageURL = URL(string: "\(Constant.googleFavURL)\(imageURLStr)"){
-                //Picked & set image icon which is more favourite on the specific site since Icon not provided in response.
-                self.sourceImageView.sd_setImage(with: imageURL, placeholderImage: nil, options: .progressiveLoad, context: nil)
-            }
         }
     }
 }

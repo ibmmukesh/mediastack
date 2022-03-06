@@ -9,54 +9,55 @@
 ///
 
 import Foundation
-import Moya
+import Alamofire
 
 // MARK: - Provider support
 
-public enum NewsAPI {
+enum NewsAPI {
     case liveNews(parameters: [String: Any])//Return live news api information.
-    //New api will come here which are in the news module & based on return API information.
+    //TODO: New api will come here which are in the news module & based on return API information.
 }
 
-extension NewsAPI: TargetType {
+extension NewsAPI: ApiTargetType {
     
     public var baseURL: URL { return URL(string: AppConstant.baseURL)! }
-    
-    public var path: String {
+
+    //Path to return the complete request URL, i.e BaseURL + EndURL
+    var path: String {
+        var servicePath = ""
         switch self {
         case .liveNews:
-            return "/v1/news"
+            servicePath = "/v1/news"
         }
+        return AppConstant.baseURL + servicePath
     }
     
-    public var method: Moya.Method {
-        switch self {
-        case .liveNews:
-            return .get
-        }
+    //Headers to the request
+    public var headers: HTTPHeaders? {
+        return ["":""]
     }
     
-    typealias Parameters = [String: Any]
-    
-    var parameters: Parameters? {
+    //parameters to the request
+     var parameters: [String: Any]? {
         switch self {
         case let .liveNews(parameters):
             return parameters
         }
     }
     
-    public var headers: [String : String]? {
-        return ["":""]
-    }
-    
-    public var sampleData: Data {
-        return Data()
-    }
-    
-    public var task: Task {
+    //method to the request
+    var method:HTTPMethod {
         switch self {
-        case let .liveNews(parameters):
-            return .requestParameters(parameters: parameters, encoding: URLEncoding.default)
+        case .liveNews:
+            return .get
+        }
+    }
+    
+    //Encoding type of api request
+    var encoding:ParameterEncoding {
+        switch self {
+        case .liveNews:
+            return URLEncoding.default
         }
     }
 }

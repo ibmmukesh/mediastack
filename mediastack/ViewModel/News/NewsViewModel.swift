@@ -20,11 +20,9 @@ protocol NewsViewModelProtocol{
     init(newsWebService:NewsWebservices?)
     
     //Function to fetch news
-    func liveNews(sources:String, categories:String,countries:String,languages:String,keywords:String,sort:String,offset:Int,limit:Int,  completion:@escaping emptyCompletionHandler)
+    func liveNews(parameter:NewsParameter,  completion:@escaping completionHandler)
     
     //TableView Data
-    func numberOfSection()->Int
-    func numberOfRows()->Int
     func detailsForCell(indexPath:IndexPath)->News?
 }
 
@@ -58,10 +56,8 @@ class NewsViewModel: NewsViewModelProtocol{
     private var newsItems = [News]()
     private var apiError : ApiError?
     //Function to call live news webservice
-    func liveNews(sources: String, categories: String, countries: String, languages: String, keywords: String, sort: String, offset: Int, limit: Int, completion: @escaping emptyCompletionHandler) {
-        
-        let parameter = NewsParameter(access_key: AppConstant.apiAccessKey, sources: sources, categories: categories, countries: countries, languages: languages, keywords: keywords, sort: sort, offset: offset, limit: limit)
-        
+    func liveNews(parameter:NewsParameter, completion: @escaping completionHandler) {
+                
         self.newsWebService?.liveNews(parameter: parameter, completionHandler: { (response) in
 
             switch response {
@@ -79,7 +75,7 @@ class NewsViewModel: NewsViewModelProtocol{
                     }
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error.message)
                 break
             }
             completion()
@@ -89,14 +85,6 @@ class NewsViewModel: NewsViewModelProtocol{
 
 //MARK: - Extension to return TableView News business logic
 extension NewsViewModel{
-    
-    internal  func numberOfSection()->Int {
-        return 1
-    }
-    
-    internal func numberOfRows()->Int {
-        return newsItems.count 
-    }
     
     internal func detailsForCell(indexPath: IndexPath)->News? {
         return newsItems[indexPath.row] as News?

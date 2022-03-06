@@ -8,6 +8,7 @@
 import Foundation
 
 enum EmptyViewType {
-  case noNewsData
+  case noData
   case noInternet
+  case serverError
 }

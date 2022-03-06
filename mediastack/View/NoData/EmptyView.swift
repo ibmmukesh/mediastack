@@ -22,6 +22,12 @@ class EmptyView: UIView {
     
     weak var delegate: EmptyViewDelegate? //Used weak to avoid the retain cycle
     
+    //MARK: Fileprivate constant
+        fileprivate struct Constant{
+            static let emptyViewNib = "EmptyView"
+            static let serverGenericMessage = "Something went wrong"
+    }
+    
     override private init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -36,7 +42,7 @@ class EmptyView: UIView {
     // MARK: - Private Methods
     
     func commonInit(){
-        let viewFromXib = Bundle.main.loadNibNamed("EmptyView", owner: self, options: nil)![0] as! UIView
+        let viewFromXib = Bundle.main.loadNibNamed(Constant.emptyViewNib, owner: self, options: nil)![0] as! UIView
         viewFromXib.frame = self.bounds
         addSubview(viewFromXib)
     }
@@ -48,11 +54,19 @@ class EmptyView: UIView {
             messageLabel.text = AppConstant.noInternet
             self.noDataImageView.image = UIImage(named: AppConstant.noInternetIcon)
             break
-        case .noNewsData:
+        case .noData:
             if let apiError = error{
                 messageLabel.text = apiError.message
             }else{
-                messageLabel.text = AppConstant.noNewsData
+                messageLabel.text = AppConstant.noData
+            }
+            self.noDataImageView.image = UIImage(named: AppConstant.imagePlaceholder)
+            break
+        case .serverError:
+            if let apiError = error{
+                messageLabel.text = apiError.message
+            }else{
+                messageLabel.text = Constant.serverGenericMessage
             }
             self.noDataImageView.image = UIImage(named: AppConstant.imagePlaceholder)
             break
@@ -63,5 +77,6 @@ class EmptyView: UIView {
 
     @IBAction func refreshClicked(_ sender: Any) {
         self.delegate?.refreshClicked()
+        self.removeFromSuperview()
     }
 }

@@ -1,6 +1,0 @@
-framework module Pods_mediastackTests {
-  umbrella header "Pods-mediastackTests-umbrella.h"
-
-  export *
-  module * { export * }
-}

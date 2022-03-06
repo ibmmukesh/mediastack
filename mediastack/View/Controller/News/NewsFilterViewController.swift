@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol NewsFilterDelegate: AnyObject {
-    func applyFilter(category:[String], country:[String], language:[String])
-}
-
 class NewsFilterViewController: UIViewController {
     
     //MARK: - Outlets
@@ -21,9 +17,9 @@ class NewsFilterViewController: UIViewController {
     var arrSelectedCategory = [IndexPath]() // This is selected cell Index array
     var arrSelectedCountry = [IndexPath]() // This is selected cell Index array
     var arrSelectedLanguage = [IndexPath]() // This is selected cell Index array
-
-    weak var delegate : NewsFilterDelegate?
     
+    var onFilterAppy: ((_ category:[String], _ country:[String], _ language:[String]) -> Void)?
+
     //MARK: - File Constants
     fileprivate struct Constant{
         static let cellIdentifier = "NewsFilterCollectionViewCell"
@@ -71,7 +67,7 @@ class NewsFilterViewController: UIViewController {
             guard let filter = self.newsFilterViewModel.newsFilterModels?[indexPath.section].filters[indexPath.item] else {return}
             language.append(filter)
         }
-        self.delegate?.applyFilter(category: category, country: country, language: language)
+        self.onFilterAppy?(category,country,language)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -92,13 +88,13 @@ class NewsFilterViewController: UIViewController {
 
 //MARK: - UICollectionViewDelegate
 extension NewsFilterViewController: UICollectionViewDataSource{
-    
+   
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return newsFilterViewModel.numberOfSection()
+        return newsFilterViewModel.newsFilterModels?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return newsFilterViewModel.numberOfItems(section: section)
+        return newsFilterViewModel.newsFilterModels?[section].filters.count ?? 0
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:NewsFilterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.cellIdentifier, for: indexPath) as! NewsFilterCollectionViewCell

@@ -11,7 +11,7 @@ import Foundation
 
 enum ApiResponse<T> {
     case success(value: T)
-    case failure(error: Error)
+    case failure(error: ApiError)
 }
 
 struct ApiResponseModel<T : Codable>: Codable {
@@ -35,18 +35,6 @@ struct ApiResponseModel<T : Codable>: Codable {
 }
 
 struct ApiError: Codable {
-
     var message: String
     var code: String
-   
-    enum CodingKeys: String, CodingKey {
-        case message = "message"
-        case code = "code"
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.message = try container.decodeIfPresent(String.self, forKey: .message) ?? ""
-        self.code = try container.decodeIfPresent(String.self, forKey: .code) ?? ""
-    }
 }
