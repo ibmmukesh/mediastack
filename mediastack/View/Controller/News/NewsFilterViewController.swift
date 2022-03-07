@@ -18,7 +18,7 @@ class NewsFilterViewController: UIViewController, Storyboarded {
     var arrSelectedCountry = [IndexPath]() // This is selected cell Index array
     var arrSelectedLanguage = [IndexPath]() // This is selected cell Index array
     
-    var onFilterAppy: onFilterAppy!//((_ category:[String], _ country:[String], _ language:[String]) -> Void)?
+    var onFilterAppy: ((_ category:[String], _ country:[String], _ language:[String]) -> Void)?
 
     weak var coordinator: MainCoordinator?
 
