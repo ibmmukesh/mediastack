@@ -14,10 +14,7 @@ class NewsFilterViewController: UIViewController, Storyboarded {
     
     //MARK: Instances
     var newsFilterViewModel : NewsFilterViewModelProtocol!
-    var arrSelectedCategory = [IndexPath]() // This is selected cell Index array
-    var arrSelectedCountry = [IndexPath]() // This is selected cell Index array
-    var arrSelectedLanguage = [IndexPath]() // This is selected cell Index array
-    
+    var arrSelectedFilter = [NewsFilterModel]()
     var onFilterAppy: ((_ category:[String], _ country:[String], _ language:[String]) -> Void)?
 
     weak var coordinator: MainCoordinator?
@@ -50,39 +47,33 @@ class NewsFilterViewController: UIViewController, Storyboarded {
     // MARK: - Navigation
     
     @IBAction func applyButtonClicked(_ sender: Any) {
-        
+
         var category = [String]()
         var country = [String]()
         var language = [String]()
         
-        for indexPath in arrSelectedCategory{
-            guard let filter = self.newsFilterViewModel.newsFilterModels?[indexPath.section].filters[indexPath.item] else {return}
-            category.append(filter)
+        if let selectedCategories = self.newsFilterViewModel.newsFilterModels?.filter({$0.name == "Category"}).first?.filters.filter({$0.selected == true}).map({$0.name}){
+            category = selectedCategories
         }
         
-        for indexPath in arrSelectedCountry{
-            guard let filter = self.newsFilterViewModel.newsFilterModels?[indexPath.section].filters[indexPath.item] else {return}
-            country.append(filter)
+        if let selectedCountries = self.newsFilterViewModel.newsFilterModels?.filter({$0.name == "Country"}).first?.filters.filter({$0.selected == true}).map({$0.name}){
+            country = selectedCountries
         }
         
-        for indexPath in arrSelectedLanguage{
-            guard let filter = self.newsFilterViewModel.newsFilterModels?[indexPath.section].filters[indexPath.item] else {return}
-            language.append(filter)
+        if let selectedLanguages = self.newsFilterViewModel.newsFilterModels?.filter({$0.name == "Language"}).first?.filters.filter({$0.selected == true}).map({$0.name}){
+            language = selectedLanguages
         }
+        
+        
         self.onFilterAppy?(category,country,language)
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func resetButtonClicked(_ sender: Any) {
         
-        if arrSelectedCategory.count > 0{
-            arrSelectedCategory.removeAll()
-        }
-        if arrSelectedLanguage.count > 0{
-            arrSelectedLanguage.removeAll()
-        }
-        if arrSelectedCountry.count > 0{
-            arrSelectedLanguage.removeAll()
+        if let newsFilterModels = self.newsFilterViewModel?.newsFilterModels, newsFilterModels.count > 0{
+            self.newsFilterViewModel.newsFilterModels?.removeAll()
+            self.newsFilterViewModel.newsFilterModels = self.newsFilterViewModel.defaultFilterModel()
         }
         self.collectionView.reloadData()
     }
@@ -101,31 +92,15 @@ extension NewsFilterViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell:NewsFilterCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constant.cellIdentifier, for: indexPath) as! NewsFilterCollectionViewCell
         cell.title = self.newsFilterViewModel.detailsForCell(indexPath: indexPath)
-        switch indexPath.section{
-        case 0:
-            if arrSelectedCategory.contains(indexPath){
+        
+        if let filterModel = self.newsFilterViewModel.newsFilterModels?[indexPath.section]{
+            if filterModel.filters[indexPath.row].selected{
                 cell.subView.backgroundColor = UIColor.coolBlue
             }else{
                 cell.subView.backgroundColor = UIColor.clear
             }
-            break
-        case 1:
-            if arrSelectedCountry.contains(indexPath){
-                cell.subView.backgroundColor = UIColor.coolBlue
-            }else{
-                cell.subView.backgroundColor = UIColor.clear
-            }
-            break
-        case 2:
-            if arrSelectedLanguage.contains(indexPath){
-                cell.subView.backgroundColor = UIColor.coolBlue
-            }else{
-                cell.subView.backgroundColor = UIColor.clear
-            }
-            break
-        default:
-            break
         }
+        
         return cell
     }
     
@@ -176,32 +151,18 @@ extension NewsFilterViewController: UICollectionViewDelegateFlowLayout {
 //MARK: - UICollectionViewDelegate
 extension NewsFilterViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       
-        switch indexPath.section{
-        case 0:
-            if arrSelectedCategory.contains(indexPath) {
-                arrSelectedCategory = arrSelectedCategory.filter { $0 != indexPath}
+        if let filterModel = self.newsFilterViewModel.newsFilterModels?[indexPath.section]{
+            if filterModel.filters[indexPath.row].selected{
+                filterModel.filters[indexPath.row].selected = false
+                self.newsFilterViewModel.newsFilterModels?[indexPath.section] = filterModel
+
             }else{
-                arrSelectedCategory.append(indexPath)
+                filterModel.filters[indexPath.row].selected = true
+                self.newsFilterViewModel.newsFilterModels?[indexPath.section] = filterModel
             }
-            break
-        case 1:
-            if arrSelectedCountry.contains(indexPath) {
-                arrSelectedCountry = arrSelectedCountry.filter { $0 != indexPath}
-            }else{
-                arrSelectedCountry.append(indexPath)
-            }
-            break
-        case 2:
-            if arrSelectedLanguage.contains(indexPath) {
-                arrSelectedLanguage = arrSelectedLanguage.filter { $0 != indexPath}
-            }else{
-                arrSelectedLanguage.append(indexPath)
-            }
-            break
-        default:
-            break
+            
         }
+        
         self.collectionView.reloadData()
     }
 }
