@@ -32,8 +32,14 @@ Module level Webservice & API class: Contains similar kind of api calls that may
 
 ### MediaStack Features.
 Users can see list of news & see the detail news in the application.
-
+User can see the sample static filter screen on live news api.
 Application will work in online mode. Handle no network/data conditions.
+
+### Used Library
+Used **Alamofire** depdendency through cocoapods to estabilish connection between iOS & backend.
+
+### Implement Unit Test
+Implement sample unit test over few cases & API call.
 
 ### Some glimpse of Media stack app:
 
