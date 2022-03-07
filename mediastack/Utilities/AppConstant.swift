@@ -40,10 +40,10 @@ struct AppConstant {
             }
             
             var apiAccessKey: String {
-                switch self {
-                case .development:    return "ceea5b1ba7cc3dea6fb496173de66bb4"
-                case .uat:             return "ceea5b1ba7cc3dea6fb496173de66bb4"
-                case .production:     return "ceea5b1ba7cc3dea6fb496173de66bb4"
+                switch self {//Old Token:- "ceea5b1ba7cc3dea6fb496173de66bb4"
+                case .development:    return "afd122df1b515cba6f46ec842047c19a"
+                case .uat:             return "afd122df1b515cba6f46ec842047c19a"
+                case .production:     return "afd122df1b515cba6f46ec842047c19a"
                 }
             }
         }

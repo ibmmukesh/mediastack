@@ -54,10 +54,11 @@ class NewsTableViewCell: UITableViewCell, ViewReusable {
         newsImageView.image = UIImage(named: AppConstant.imagePlaceholder)
 
         self.sourceLabel.text = newsItem?.source
-        self.publishedLabel.text = newsItem?.published_at
         self.titleLabel.text = newsItem?.title
         self.descriptionLabel.text = newsItem?.description
         self.categoryLabel.text = newsItem?.category
+
+        self.publishedLabel.text = newsItem?.published_at?.toDate().convertToUTC()
 
         if let author = newsItem?.author, let source = newsItem?.source{
             self.authorLabel.text = "\(Constant.author): \(author), \(source)"

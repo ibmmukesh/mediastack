@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		27444340C75E4225B702CFFA /* Pods_mediastack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD0817B9355BFC86AD0045AD /* Pods_mediastack.framework */; };
+		75064B6A27D5A4FF0097A956 /* Date+UTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75064B6927D5A4FF0097A956 /* Date+UTC.swift */; };
+		75064B6B27D5A4FF0097A956 /* Date+UTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75064B6927D5A4FF0097A956 /* Date+UTC.swift */; };
+		75064B6C27D5A4FF0097A956 /* Date+UTC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75064B6927D5A4FF0097A956 /* Date+UTC.swift */; };
+		75064B6E27D5A5520097A956 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75064B6D27D5A5520097A956 /* String+Date.swift */; };
+		75064B6F27D5A5520097A956 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75064B6D27D5A5520097A956 /* String+Date.swift */; };
+		75064B7027D5A5520097A956 /* String+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75064B6D27D5A5520097A956 /* String+Date.swift */; };
 		750D368C27CF4792002FE7B3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750D368B27CF4792002FE7B3 /* AppDelegate.swift */; };
 		750D368E27CF4792002FE7B3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750D368D27CF4792002FE7B3 /* SceneDelegate.swift */; };
 		750D369027CF4792002FE7B3 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750D368F27CF4792002FE7B3 /* NewsViewController.swift */; };
@@ -189,6 +195,8 @@
 /* Begin PBXFileReference section */
 		0BEEF8397016FAE067713746 /* Pods-mediastack.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mediastack.release.xcconfig"; path = "Target Support Files/Pods-mediastack/Pods-mediastack.release.xcconfig"; sourceTree = "<group>"; };
 		5AEAF9F595B9F9077547B2C2 /* Pods-mediastack.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-mediastack.debug.xcconfig"; path = "Target Support Files/Pods-mediastack/Pods-mediastack.debug.xcconfig"; sourceTree = "<group>"; };
+		75064B6927D5A4FF0097A956 /* Date+UTC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+UTC.swift"; sourceTree = "<group>"; };
+		75064B6D27D5A5520097A956 /* String+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Date.swift"; sourceTree = "<group>"; };
 		750D368827CF4792002FE7B3 /* mediastack.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mediastack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		750D368B27CF4792002FE7B3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		750D368D27CF4792002FE7B3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -501,6 +509,8 @@
 				75DE36DD27D3886D002EB0E7 /* ApiTargetType+Configuration.swift */,
 				75DE36DF27D38A89002EB0E7 /* Dictionary+Configuration.swift */,
 				7538C0D527D4CFE300E586F2 /* UIImageView+Cache.swift */,
+				75064B6927D5A4FF0097A956 /* Date+UTC.swift */,
+				75064B6D27D5A5520097A956 /* String+Date.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -974,9 +984,11 @@
 				750D36D027CF5C67002FE7B3 /* NewsWebservice.swift in Sources */,
 				750D36C927CF57FF002FE7B3 /* ApiResponseModel.swift in Sources */,
 				75A5126827D09226004228D3 /* NewsDetailViewController.swift in Sources */,
+				75064B6A27D5A4FF0097A956 /* Date+UTC.swift in Sources */,
 				750D36C727CF579D002FE7B3 /* APIStatus.swift in Sources */,
 				7538C0CE27D4CF7500E586F2 /* ImageDownloader.swift in Sources */,
 				750D36C227CF4C60002FE7B3 /* NewsViewModel.swift in Sources */,
+				75064B6E27D5A5520097A956 /* String+Date.swift in Sources */,
 				7555E1F727D1B1AA005BCD8B /* UICollectionView+.swift in Sources */,
 				7555E20027D1BB4D005BCD8B /* NewsFilterHeaderCollectionReusableView.swift in Sources */,
 				75A5127727D09F6E004228D3 /* EmptyType.swift in Sources */,
@@ -1043,9 +1055,11 @@
 				7538C01627D491BE00E586F2 /* NewsWebservice.swift in Sources */,
 				7538C01727D491BE00E586F2 /* ApiResponseModel.swift in Sources */,
 				7538C01827D491BE00E586F2 /* NewsDetailViewController.swift in Sources */,
+				75064B6B27D5A4FF0097A956 /* Date+UTC.swift in Sources */,
 				7538C01927D491BE00E586F2 /* APIStatus.swift in Sources */,
 				7538C0CF27D4CF7500E586F2 /* ImageDownloader.swift in Sources */,
 				7538C01A27D491BE00E586F2 /* NewsViewModel.swift in Sources */,
+				75064B6F27D5A5520097A956 /* String+Date.swift in Sources */,
 				7538C01B27D491BE00E586F2 /* UICollectionView+.swift in Sources */,
 				7538C01C27D491BE00E586F2 /* NewsFilterHeaderCollectionReusableView.swift in Sources */,
 				7538C01D27D491BE00E586F2 /* EmptyType.swift in Sources */,
@@ -1094,9 +1108,11 @@
 				7538C08B27D492F800E586F2 /* NewsWebservice.swift in Sources */,
 				7538C08C27D492F800E586F2 /* ApiResponseModel.swift in Sources */,
 				7538C08D27D492F800E586F2 /* NewsDetailViewController.swift in Sources */,
+				75064B6C27D5A4FF0097A956 /* Date+UTC.swift in Sources */,
 				7538C08E27D492F800E586F2 /* APIStatus.swift in Sources */,
 				7538C0D027D4CF7500E586F2 /* ImageDownloader.swift in Sources */,
 				7538C08F27D492F800E586F2 /* NewsViewModel.swift in Sources */,
+				75064B7027D5A5520097A956 /* String+Date.swift in Sources */,
 				7538C09027D492F800E586F2 /* UICollectionView+.swift in Sources */,
 				7538C09127D492F800E586F2 /* NewsFilterHeaderCollectionReusableView.swift in Sources */,
 				7538C09227D492F800E586F2 /* EmptyType.swift in Sources */,
@@ -1292,13 +1308,14 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DProduction";
-				PRODUCT_BUNDLE_IDENTIFIER = com.release.mediastack.pr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.release.mediastack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1322,13 +1339,14 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -DProduction";
-				PRODUCT_BUNDLE_IDENTIFIER = com.release.mediastack.pr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.release.mediastack;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1424,6 +1442,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1454,6 +1473,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1484,6 +1504,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1514,6 +1535,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
