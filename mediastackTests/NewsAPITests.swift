@@ -30,9 +30,9 @@ class NewsAPITests: XCTestCase {
       // Arrange
       let expectation = expectation(description: "Completion handler invoked")
       var success: Bool?
-      var responseError: Error?
+      var responseError: ApiError?
 
-        let parameter = NewsParameter(access_key: AppConstant.apiAccessKey, sources: "", categories: "", countries: "", languages: "", keywords: "", sort: "", offset: 0, limit: 10)
+        let parameter = NewsParameter(sources: "", categories: "", countries: "", languages: "", keywords: "", sort: "", offset: 0, limit: 10)
 
       // Act
         newsWebService.liveNews(parameter: parameter) { response in
